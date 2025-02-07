@@ -19,7 +19,7 @@ A visual diagram editor for creating and sharing Cloudflare architecture diagram
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/cloudflare-diagram-tool.git
+git clone https://github.com/nouvellonsteph/cloudflare-diagram-tool.git
 cd cloudflare-diagram-tool
 ```
 
