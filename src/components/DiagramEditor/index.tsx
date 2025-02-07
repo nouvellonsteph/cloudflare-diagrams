@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, DragEvent } from 'react';
+import React, { useCallback, useRef, useState, DragEvent, KeyboardEvent } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -7,6 +7,7 @@ import ReactFlow, {
 import ReactFlowInstance from 'reactflow';
 import NodeDragHandler from 'reactflow';
 import OnEdgesDelete from 'reactflow';
+import OnNodesDelete from 'reactflow';
 import Edge from 'reactflow';
 import Connection from 'reactflow';
 import NodeTypes from 'reactflow';
@@ -32,9 +33,11 @@ const DiagramEditor: React.FC = () => {
     removeEdge: removeEdgeFromStore,
     updateNode,
     addNode,
+    removeNode,
   } = useDiagramStore();
 
   const [selectedEdge, setSelectedEdge] = useState<Edge | null>(null);
+  const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
   const [menuPosition, setMenuPosition] = useState<{ x: number; y: number } | null>(null);
 
   const diagram = getCurrentDiagram();
@@ -81,6 +84,14 @@ const DiagramEditor: React.FC = () => {
     [removeEdgeFromStore]
   );
 
+  const onNodesDelete: OnNodesDelete = useCallback(
+    (nodes: Node[]) => {
+      nodes.forEach(node => removeNode(node.id));
+      console.log('onNodesDelete', nodes);
+    },
+    [removeNode]
+  );
+
   const onNodeDrag: NodeDragHandler = useCallback(
     (_: MouseEvent, node: Node) => {
       const { id, position } = node;
@@ -123,6 +134,14 @@ const DiagramEditor: React.FC = () => {
     [reactFlowInstance, addNode]
   );
 
+  const onSelectionChange = useCallback((params: { nodes: Node[] }) => {
+    setSelectedNodes(params.nodes);
+    // Focus the wrapper div when a node is selected to enable keyboard events
+    if (params.nodes.length > 0 && reactFlowWrapper.current) {
+      reactFlowWrapper.current.focus();
+    }
+  }, []);
+
   if (!diagram) {
     return null;
   }
@@ -130,19 +149,23 @@ const DiagramEditor: React.FC = () => {
   return (
     <div 
       ref={reactFlowWrapper}
-      style={{ width: '100%', height: '100vh' }}>
+      style={{ width: '100%', height: '100vh' }}
+      tabIndex={0} // Make div focusable to capture keyboard events
+    >
       <ReactFlow
         nodes={diagram.nodes}
         edges={diagram.edges}
         nodeTypes={nodeTypes}
         onConnect={onConnect}
         onEdgesDelete={onEdgeDelete}
+        onNodesDelete={onNodesDelete}
         onNodeDrag={onNodeDrag}
         onNodeDragStop={onNodeDragStop}
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
         onEdgeClick={onEdgeClick}
+        onSelectionChange={onSelectionChange}
         fitView
         defaultEdgeOptions={{
           type: 'default',

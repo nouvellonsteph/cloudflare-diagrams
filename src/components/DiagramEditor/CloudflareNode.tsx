@@ -1,5 +1,7 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Handle } from 'reactflow';
+import Node from 'reactflow';
+import useDiagramStore from '../../store/diagramStore';
 
 // Po ition enum since it's not exported from reactflow
 enum Position {
@@ -9,23 +11,57 @@ enum Position {
   Bottom = 'bottom'
 }
 
-interface CloudflareNodeData {
+export interface CloudflareNodeData {
   productId?: string;
   name: string;
   category: string;
   iconUrl?: string;
 }
 
-const CloudflareNode = memo(({ data }: { data: CloudflareNodeData }) => {
+const CloudflareNode = memo(({ data, id }: Node<CloudflareNodeData>) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const { removeNode } = useDiagramStore();
   return (
-    <div className="cloudflare-node" style={{
+    <div 
+      className="cloudflare-node" 
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
       background: 'white',
       border: '1px solid #e5e5e5',
       padding: '10px',
       borderRadius: '8px',
       width: '150px',
-      position: 'relative'
+      position: 'relative',
     }}>
+      {isHovered && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            removeNode(id);
+          }}
+          style={{
+            position: 'absolute',
+            top: -10,
+            right: -10,
+            width: '20px',
+            height: '20px',
+            borderRadius: '50%',
+            background: '#ff4444',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            padding: 0,
+            zIndex: 10
+          }}
+        >
+          ×
+        </button>
+      )}
       {/* Invisible handles with larger hit areas */}
       {/* Handles that work as both source and target */}
       {/* Source handles */}
@@ -85,7 +121,7 @@ const CloudflareNode = memo(({ data }: { data: CloudflareNodeData }) => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
         <div style={{ width: '40px', height: '40px' }}>
           <img 
-            src={data.iconUrl || (data.productId ? `/icons/${data.productId}.svg` : '')}
+            src={data.iconUrl || (data.productId ? `src/assets/icons/${data.productId}.svg` : '')}
             alt={data.name}
             style={{ width: '100%', height: '100%' }}
             onError={(e) => {

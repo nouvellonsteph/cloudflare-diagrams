@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { CLOUDFLARE_CATEGORIES } from '../../utils/cloudflareProducts';
+import IconGallery from './IconGallery';
+import { getAvailableIcons } from '../../utils/iconUtils';
 
 // Get icon name from path by removing .svg extension
 const getIconName = (path: string) => {
@@ -15,22 +16,15 @@ const CustomNodeForm: React.FC<CustomNodeFormProps> = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [iconUrl, setIconUrl] = useState('');
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [availableIcons, setAvailableIcons] = useState<string[]>([]);
 
   useEffect(() => {
-    // Fetch list of icons from public/icons directory
-    fetch('/icons')
-      .then(response => response.text())
-      .then(text => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
-        const links = Array.from(doc.querySelectorAll('a'))
-          .map(a => a.getAttribute('href'))
-          .filter(href => href && href.endsWith('.svg'))
-          .map(href => href as string);
-        setAvailableIcons(links);
-      })
-      .catch(console.error);
+    // Load icons when component mounts
+    getAvailableIcons().then(icons => {
+      //console.log('Available icons:', icons);
+      setAvailableIcons(icons);
+    });
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -50,7 +44,7 @@ const CustomNodeForm: React.FC<CustomNodeFormProps> = ({ onSubmit }) => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Node name"
+          placeholder="Name"
           style={{
             width: '100%',
             padding: '8px',
@@ -61,9 +55,10 @@ const CustomNodeForm: React.FC<CustomNodeFormProps> = ({ onSubmit }) => {
           required
         />
         
-        <select
+        <input
           value={category}
           onChange={(e) => setCategory(e.target.value)}
+          placeholder="Category"
           style={{
             width: '100%',
             padding: '8px',
@@ -74,34 +69,60 @@ const CustomNodeForm: React.FC<CustomNodeFormProps> = ({ onSubmit }) => {
           }}
           required
         >
-          <option value="">Select category</option>
-          {Object.values(CLOUDFLARE_CATEGORIES).map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+        </input>
 
-        <select
-          value={iconUrl}
-          onChange={(e) => setIconUrl(e.target.value)}
-          style={{
-            width: '100%',
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid var(--border-color)',
-            marginBottom: '8px',
-            backgroundColor: 'white'
-          }}
-        >
-          <option value="">Select icon (optional)</option>
-          {availableIcons.map((icon) => (
-            <option key={icon} value={`/icons/${icon}`}>
-              {getIconName(icon)}
-            </option>
-          ))}
-        </select>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', alignItems: 'center' }}>
+          {iconUrl && (
+            <img 
+              src={iconUrl} 
+              alt="Selected icon" 
+              style={{ width: '24px', height: '24px' }} 
+            />
+          )}
+          <button
+            type="button"
+            onClick={() => setIsGalleryOpen(true)}
+            style={{
+              flex: 1,
+              padding: '8px',
+              borderRadius: '4px',
+              border: '1px solid var(--border-color)',
+              backgroundColor: 'white',
+              cursor: 'pointer',
+              textAlign: 'left',
+              color: iconUrl ? 'black' : '#666'
+            }}
+          >
+            {iconUrl ? getIconName(iconUrl) : 'Select icon (optional)'}
+          </button>
+          {iconUrl && (
+            <button
+              type="button"
+              onClick={() => setIconUrl('')}
+              style={{
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid var(--border-color)',
+                backgroundColor: 'white',
+                cursor: 'pointer',
+                color: '#666'
+              }}
+            >
+              ×
+            </button>
+          )}
+        </div>
       </div>
+
+      <IconGallery
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        icons={availableIcons}
+        onSelectIcon={(icon) => {
+          setIconUrl(icon);
+          setIsGalleryOpen(false);
+        }}
+      />
 
       <button
         type="submit"
