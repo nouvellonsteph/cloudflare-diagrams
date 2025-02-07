@@ -66,7 +66,7 @@ const DiagramList: React.FC = () => {
     <div style={{
       padding: '20px',
       borderRight: '1px solid #ddd',
-      width: isCollapsed ? '60px' : '300px',
+      width: isCollapsed ? '120px' : '300px',
       height: '100vh',
       overflowY: 'auto',
       backgroundColor: '#f8f9fa',
@@ -78,7 +78,7 @@ const DiagramList: React.FC = () => {
         alignItems: 'center',
         marginBottom: '20px'
       }}>
-        {!isCollapsed && <h2 style={{ margin: 0 }}>Diagrams</h2>}
+        {!isCollapsed && <h3 style={{ margin: 0 }}>Diagram list</h3>}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           style={{
@@ -150,11 +150,16 @@ const DiagramList: React.FC = () => {
           >
             {isCollapsed ? (
               <div style={{ 
-                width: '20px', 
-                height: '20px', 
-                backgroundColor: diagram.id === currentDiagramId ? '#f6821f' : '#ddd',
-                borderRadius: '50%'
-              }} />
+                width: '100%',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                fontSize: '0.9em',
+                color: diagram.id === currentDiagramId ? '#f6821f' : '#333',
+                fontWeight: diagram.id === currentDiagramId ? 'bold' : 'normal'
+              }}>
+                {diagram.name}
+              </div>
             ) : (
               <>
                 <div style={{ 
