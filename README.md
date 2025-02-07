@@ -1,50 +1,106 @@
-# React + TypeScript + Vite
+# Cloudflare Diagram Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual diagram editor for creating and sharing Cloudflare architecture diagrams. Built with React and ReactFlow, this tool allows you to visually design and document your Cloudflare infrastructure.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interactive diagram editor with drag-and-drop interface
+- Support for all major Cloudflare products across categories:
+  - Security (WAF, DDoS Protection, Bot Management, Access, Teams)
+  - Performance (CDN)
+  - Developer Tools (Workers, Pages, R2, D1, KV, Durable Objects)
+  - Network Services (DNS, Spectrum)
+  - Reliability (Load Balancing)
+- Customizable connections between products
+- Mini-map for easy navigation
+- Export capabilities for sharing diagrams
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/cloudflare-diagram-tool.git
+cd cloudflare-diagram-tool
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+## Usage
+
+1. **Creating a New Diagram**
+   - Use the product selector panel to choose Cloudflare products
+   - Drag and drop products onto the canvas
+   - Connect products by dragging from one node's handle to another
+
+2. **Editing Connections**
+   - Click on any connection line to edit its properties
+   - Add labels to describe the relationship between products
+
+3. **Organizing Your Diagram**
+   - Drag nodes to reposition them
+   - Use the mini-map for navigation in large diagrams
+   - Snap-to-grid functionality for precise alignment
+
+4. **Exporting**
+   - Use the export panel to save or share your diagram
+
+## Available Products
+
+### Security
+- WAF (Web Application Firewall)
+- DDoS Protection
+- Bot Management
+- Access (Zero Trust access management)
+- Teams (Secure enterprise network)
+
+### Performance
+- CDN (Content Delivery Network)
+
+### Developer Tools
+- Workers (Serverless computing platform)
+- Pages (JAMstack platform)
+- R2 (Object storage)
+- D1 (SQL Database)
+- KV (Key-value storage)
+- Durable Objects (Distributed computing)
+
+### Network Services
+- DNS (Managed DNS service)
+- Spectrum (TCP/UDP proxy)
+
+### Reliability
+- Load Balancing (Global load balancer)
+
+## Development
+
+- Build the project:
+```bash
+npm run build
+```
+
+- Run linting:
+```bash
+npm run lint
+```
+
+- Preview production build:
+```bash
+npm run preview
+```
+
+## Technologies Used
+
+- React
+- ReactFlow
+- TypeScript
+- Vite
+- Zustand (State Management)
+- Cloudflare Component Libraries
