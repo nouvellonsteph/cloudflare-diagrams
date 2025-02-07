@@ -1,0 +1,45 @@
+.menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.menuItem:last-child {
+  margin-bottom: 0;
+}
+
+.menuItem label {
+  font-size: 14px;
+  color: #333;
+}
+
+.menuItem select {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.menuItem input[type="checkbox"] {
+  margin: 0;
+}
+
+.menuItem input[type="text"] {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 120px;
+  width: 100%;
+}
