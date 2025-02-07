@@ -134,7 +134,7 @@ const ProductSelector: React.FC<ProductSelectorProps> = ({ reactFlowInstance }) 
                 >
                   <div style={{ width: '24px', height: '24px' }}>
                     <img 
-                      src={`/src/assets/icons/${product.id}.svg`}
+                      src={`/icons/${product.id}.svg`}
                       alt={product.name}
                       style={{ width: '100%', height: '100%' }}
                     />
