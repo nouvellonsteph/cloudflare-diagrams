@@ -85,7 +85,7 @@ const CloudflareNode = memo(({ data }: { data: CloudflareNodeData }) => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
         <div style={{ width: '40px', height: '40px' }}>
           <img 
-            src={data.iconUrl || (data.productId ? `https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/icons/${data.productId}.svg` : '')}
+            src={data.iconUrl || (data.productId ? `/icons/${data.productId}.svg` : '')}
             alt={data.name}
             style={{ width: '100%', height: '100%' }}
             onError={(e) => {

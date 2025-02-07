@@ -1,7 +1,6 @@
 import React from 'react';
 import DiagramEditor from './components/DiagramEditor';
 import DiagramList from './components/DiagramList';
-import ExportPanel from './components/ExportPanel';
 import 'reactflow/dist/style.css';
 
 const App: React.FC = () => {
