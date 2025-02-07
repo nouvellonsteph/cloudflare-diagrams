@@ -25,5 +25,5 @@
     /* Types */
     "types": ["@cloudflare/workers-types"]
   },
-  "include": ["src", "src/functions"]
+  "include": ["src", "functions"]
 }

@@ -1,4 +1,4 @@
-import { CloudflareDiagram } from '../types';
+import { CloudflareDiagram } from '../src/types';
 import type { KVNamespace, EventContext } from '@cloudflare/workers-types';
 
 interface Env {
