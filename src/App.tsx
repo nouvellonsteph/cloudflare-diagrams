@@ -57,8 +57,6 @@ const App: React.FC = () => {
             <DiagramEditor />
           </div>
           
-          {/* Bottom Panel - Export Options */}
-          <ExportPanel />
         </div>
       </div>
     </div>
