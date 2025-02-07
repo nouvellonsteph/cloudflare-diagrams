@@ -232,10 +232,7 @@ const DiagramList: React.FC = () => {
                 border: 'none',
                 backgroundColor: 'transparent',
                 cursor: isExporting ? 'not-allowed' : 'pointer',
-                textAlign: 'left',
-                ':hover': {
-                  backgroundColor: '#f8f9fa'
-                }
+                textAlign: 'left'
               }}
             >
               {format.toUpperCase()}

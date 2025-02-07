@@ -2,18 +2,15 @@ import React, { useCallback, useRef, useState, DragEvent } from 'react';
 import ReactFlow, {
   Background,
   Controls,
-  Handle,
   MiniMap,
 } from 'reactflow';
-import {
-  Node,
-  NodeTypes,
-  Connection,
-  Edge,
-  OnEdgesDelete,
-  NodeDragHandler,
-  ReactFlowInstance,
-} from 'reactflow';
+import ReactFlowInstance from 'reactflow';
+import NodeDragHandler from 'reactflow';
+import OnEdgesDelete from 'reactflow';
+import Edge from 'reactflow';
+import Connection from 'reactflow';
+import NodeTypes from 'reactflow';
+import Node from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import CloudflareNode from './CloudflareNode';

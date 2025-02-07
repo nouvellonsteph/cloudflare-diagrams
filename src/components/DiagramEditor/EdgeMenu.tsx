@@ -1,12 +1,5 @@
 import React from 'react';
 import type Edge from 'reactflow';
-
-interface EdgeMarker {
-  type: 'arrow' | 'arrowclosed';
-  width: number;
-  height: number;
-  color: string;
-}
 import styles from './EdgeMenu.module.css';
 
 interface EdgeMenuProps {
